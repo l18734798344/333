@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body ng-controller="ctrl">
+		{{date | date:"HH":"UTC"}}时:{{date | date:"mm"}}分:{{date |date:"ss"}}秒:
+	</body>
+	<script src="../js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app=angular.module("app",[])
+		app.controller("ctrl",function ($scope,$interval) {
+			$scope.future=new Date("2017/9/4 16:20:00").getTime();
+			console.log($scope.future);
+			$time=$interval(function () {
+				$scope.now=new Date().getTime();//现在的系统时间
+				$scope.date=new Date($scope.future-$scope.now)
+				console.log($scope.date);
+				if ($scope.now>=$scope.future-1000) {
+					$interval.cancel($time);
+					alert("时间到了")
+				}
+				
+			},1000)
+		})
+		
+	</script>
+</html>
